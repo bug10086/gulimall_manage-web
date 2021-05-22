@@ -241,6 +241,8 @@ export default {
           }
           this.countNodeLevel(node.childNodes[i]);
         }
+      }else{
+        this.maxLevel = node.level;
       }
     },
     edit(data) {

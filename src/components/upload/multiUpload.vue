@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-upload
-      action="/thirdparty/upload/image"
+      action="http://127.0.0.1:88/api/thirdparty/upload/image"
       :data="dataObj"
       list-type="picture-card"
       :file-list="fileList"
@@ -74,30 +74,33 @@ export default {
       this.dialogImageUrl = file.url;
     },
     beforeUpload(file) {
-      let _self = this;
-      return new Promise((resolve, reject) => {
-        policy()
-          .then(response => {
-            console.log("这是什么${filename}");
-            _self.dataObj.policy = response.data.policy;
-            _self.dataObj.signature = response.data.signature;
-            _self.dataObj.ossaccessKeyId = response.data.accessid;
-            _self.dataObj.key = response.data.dir + "/"+getUUID()+"_${filename}";
-            _self.dataObj.dir = response.data.dir;
-            _self.dataObj.host = response.data.host;
-            resolve(true);
-          })
-          .catch(err => {
-            console.log("出错了...",err)
-            reject(false);
-          });
-      });
+      // let _self = this;
+      // return new Promise((resolve, reject) => {
+      //   policy()
+      //     .then(response => {
+      //       console.log("这是什么${filename}");
+      //       _self.dataObj.policy = response.data.policy;
+      //       _self.dataObj.signature = response.data.signature;
+      //       _self.dataObj.ossaccessKeyId = response.data.accessid;
+      //       _self.dataObj.key = response.data.dir + "/"+getUUID()+"_${filename}";
+      //       _self.dataObj.dir = response.data.dir;
+      //       _self.dataObj.host = response.data.host;
+      //       resolve(true);
+      //     })
+      //     .catch(err => {
+      //       console.log("出错了...",err)
+      //       reject(false);
+      //     });
+      // });
     },
     handleUploadSuccess(res, file) {
+      console.log(res);
+      console.log(file);
       this.fileList.push({
         name: file.name,
         // url: this.dataObj.host + "/" + this.dataObj.dir + "/" + file.name； 替换${filename}为真正的文件名
-        url: this.dataObj.host + "/" + this.dataObj.key.replace("${filename}",file.name)
+        // url: this.dataObj.host + "/" + this.dataObj.key.replace("${filename}",file.name)
+        url:res
       });
       this.emitInput(this.fileList);
     },

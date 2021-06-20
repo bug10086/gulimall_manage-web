@@ -50,7 +50,7 @@ export default {
       dataForm: {
         status: "",
         key: "",
-        brandId: 0,
+        brandId: "",
         catelogId: 0
       },
       catPathSub: null,

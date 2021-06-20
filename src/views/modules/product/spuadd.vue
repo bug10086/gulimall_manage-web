@@ -51,7 +51,7 @@
             <el-form-item label="商品介绍" prop="decript">
               <multi-upload v-model="spu.decript"></multi-upload>
             </el-form-item>
-
+            
             <el-form-item label="商品图集" prop="images">
               <multi-upload v-model="spu.images"></multi-upload>
             </el-form-item>
@@ -393,10 +393,10 @@ export default {
           { required: true, message: "请选择一个品牌", trigger: "blur" }
         ],
         decript: [
-          { required: true, message: "请上传商品详情图集", trigger: "blur" }
+          // { required: true, message: "请上传商品详情图集", trigger: "blur" }
         ],
         images: [
-          { required: true, message: "请上传商品图片集", trigger: "blur" }
+          // { required: true, message: "请上传商品图片集", trigger: "blur" }
         ],
         weight: [
           {
@@ -676,13 +676,15 @@ export default {
           //先对表单的baseAttrs进行初始化
           data.data.forEach(item => {
             let attrArray = [];
-            item.attrs.forEach(attr => {
-              attrArray.push({
-                attrId: attr.attrId,
-                attrValues: "",
-                showDesc: attr.showDesc
+            if(item.attrs != null && item.attrs.length > 0){
+              item.attrs.forEach(attr => {
+                attrArray.push({
+                  attrId: attr.attrId,
+                  attrValues: "",
+                  showDesc: attr.showDesc
+                });
               });
-            });
+            }
             this.dataResp.baseAttrs.push(attrArray);
           });
           this.dataResp.steped[0] = 0;
